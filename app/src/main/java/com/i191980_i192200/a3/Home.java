@@ -2,6 +2,7 @@ package com.i191980_i192200.a3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -43,15 +44,15 @@ public class Home extends AppCompatActivity {
         adapter=new MyAdapter(Home.this,ls);
         rv.setAdapter(adapter);
         rv.setLayoutManager(lm);
-        GettingMessages();
+//        GettingMessages();
     }
 
-//    @Override
-    public void GettingMessages() {
-//        super.onResume();
-        String url ="http://192.168.10.2/a3/getmsgs.php";
+    @Override
+    public void onResume() {
+        super.onResume();
+        String uri = String.format("http://192.168.10.2/a3/getmsgs.php?senderID=%1$s&receiverID=%2$s",senderID,receiverID);
         RequestQueue queue= Volley.newRequestQueue(Home.this);
-        StringRequest request=new StringRequest( Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request=new StringRequest( Request.Method.GET, uri, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -63,7 +64,7 @@ public class Home extends AppCompatActivity {
                                 for (int i=0; i<messages.length();i++)
                                 {
                                     JSONObject message=messages.getJSONObject(i);
-                                    ls.add(new MyChat(message.getString("msg"),message.getInt("senderID"),message.getInt("recieverID")));
+                                    ls.add(new MyChat(message.getString("msg"),message.getString("senderID"),message.getString("receiverID")));
                                     adapter.notifyDataSetChanged();
                                 }
 
@@ -81,56 +82,9 @@ public class Home extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(Home.this,"Error Connecting Server",Toast.LENGTH_LONG).show();
                     }
-                }) {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("senderID", senderID.trim());
-                params.put("receiverID", receiverID.trim());
-
-                return params;
-            }
-
-
-    };
+                });
 
         queue.add(request);
     }
 
-//    private void GettingMessages(){
-//        String url ="http://192.168.10.3/a3/signin.php";
-//        RequestQueue requestqueue = Volley.newRequestQueue(this);
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                if(response.trim().equals("signin ok")){
-//                    Toast.makeText(getApplicationContext(),"SignIn Successful", Toast.LENGTH_LONG).show();
-//
-//                    Intent intent=new Intent(SignIn.this, Home.class);
-//                    startActivity(intent);
-//                }else{
-//                    Toast.makeText(getApplicationContext(),"SignIn Failed", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(getApplicationContext(),"Error " + error.toString(), Toast.LENGTH_LONG).show();
-//            }
-//        }) {
-//            @Nullable
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//                Map<String, String> params = new HashMap<>();
-//                params.put("email", email.getText().toString().trim());
-//                params.put("password", password.getText().toString().trim());
-//
-//                return params;
-//            }
-//        };
-//        requestqueue.add(stringRequest);
-//    }
 }

@@ -1,5 +1,6 @@
 package com.i191980_i192200.a3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
-    Button signupBtn;
+    Button signupBtn,signinBtn;
     EditText password,email,name;
 
     @Override
@@ -30,6 +31,7 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.signup);
 
         signupBtn = findViewById(R.id.signupbtn);
+        signinBtn = findViewById(R.id.signinbtn);
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -38,6 +40,14 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SignUp_Ftn();
+            }
+        });
+
+        signinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1=new Intent(SignUp.this, SignIn.class);
+                startActivity(intent1);
             }
         });
     }

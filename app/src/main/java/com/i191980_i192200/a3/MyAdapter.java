@@ -34,13 +34,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.msg.setText(ls.get(position).getMsg());
         holder.senderID.setText(ls.get(position).getSenderID());
-        holder.recieverID.setText(ls.get(position).getRecieverID());
+        holder.receiverID.setText(ls.get(position).getReceiverID());
         holder.rv_row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(c,position+"", Toast.LENGTH_LONG).show();
-                ls.remove(position);
-                notifyDataSetChanged();
+//                ls.remove(position);
+//                notifyDataSetChanged();
             }
         });
 
@@ -52,13 +52,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView msg,senderID,recieverID;
+        TextView msg,senderID,receiverID;
         LinearLayout rv_row;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             msg=itemView.findViewById(R.id.msg);
             senderID=itemView.findViewById(R.id.senderID);
-            recieverID=itemView.findViewById(R.id.recieverID);
+            receiverID=itemView.findViewById(R.id.receiverID);
             rv_row=itemView.findViewById(R.id.rv_row);
         }
     }

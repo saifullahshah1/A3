@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class SignIn extends AppCompatActivity {
 
-    Button signinBtn;
+    Button signinBtn,signupBtn;
     EditText password,email;
 
     @Override
@@ -32,8 +32,17 @@ public class SignIn extends AppCompatActivity {
         setContentView(R.layout.signin);
 
         signinBtn = findViewById(R.id.signinbtn);
+        signupBtn = findViewById(R.id.signupbtn);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1=new Intent(SignIn.this, SignUp.class);
+                startActivity(intent1);
+            }
+        });
 
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
